@@ -1,0 +1,39 @@
+.projects {
+    padding: 30px 400px;
+    &__title {
+        text-shadow: 2px 2px 5px rgb(139, 139, 139);
+    }
+    &__grid {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-items: center;
+        gap: 40px;
+        margin-top: 30px;
+    }
+    &__item {
+        cursor: pointer;
+        width: 230px;
+        box-shadow: 2px 2px 15px black;
+        border-radius: 5px;
+        padding: 10px
+    }
+    &__name {
+        font-size: 22px;
+    }
+    &__tasks {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+    &__list {
+        margin-top: 10px;
+        li {
+            margin-bottom: 10px;
+        }
+    }
+    &__add {
+        margin-top: 40px;
+        width: 150px;
+        height: 50px;
+        border-radius: 10px
+    }
+}
