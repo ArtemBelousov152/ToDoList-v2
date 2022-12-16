@@ -1,0 +1,36 @@
+.tasks {
+    padding: 20px 50px;
+    &__header {
+        display: grid;
+        grid-template-columns: repeat(3, 606px);
+    }
+    &__name {
+        font-size: 30px;
+        justify-self: left;
+    }
+    &__add {
+        width: 300px;
+        border-radius: 10px;
+        justify-self: center;
+    }
+    &__drag {
+        &_zone {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 500px);
+            justify-content: center;
+        }
+        &_area {
+            width: 500px;
+            min-height: 100vh;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        &_center {
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+        }
+    }
+}

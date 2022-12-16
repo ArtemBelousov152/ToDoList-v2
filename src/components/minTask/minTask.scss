@@ -1,0 +1,54 @@
+.minTask {
+    width: 450px;
+    height: 375px;
+    padding: 20px;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__number {
+        font-size: 25px;
+        font-weight: bold;
+    }
+    &__descr {
+        font-size: 16px;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 300px;
+        height: 107px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+    &__priority {
+        margin-top: 10px;
+        font-size: 17px;
+        span {
+            font-weight: bold;
+        }
+    }
+    &__create {
+        margin-top: 10px;
+        font-size: 17px;
+    }
+    &__workTime {
+        margin-top: 10px;
+        font-size: 17px;
+    }
+    &__footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-evenly;
+        button {
+            width: 150px;
+            height: 40px;
+            cursor: pointer;
+        }
+    }
+}

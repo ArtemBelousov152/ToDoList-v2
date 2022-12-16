@@ -1,12 +1,13 @@
 import './App.scss';
-import Projects from '../pages/projects/Projects';
-import Tasks from '../pages/tasks/Tasks';
+import { Projects, Tasks } from '../pages';
+import Task from '../task/Task';
 
 function App() {
     return (
         <div className='app'>
             {/* <Projects/> */}
-            <Tasks/>
+            {/* <Tasks/> */}
+            <Task/>
         </div>
     )
 }

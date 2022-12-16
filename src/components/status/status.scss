@@ -1,0 +1,13 @@
+.status {
+    width: 40px;
+    height: 40px;
+    background: #F0F427;
+    border: 1px solid #000000;
+    cursor: pointer;
+    border-radius: 50%;
+    justify-self: right;
+    &__mini {
+        width: 25px;
+        height: 25px;
+    }
+}
