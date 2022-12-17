@@ -13,4 +13,56 @@
         font-size: 20px;
         font-weight: bold;
     }
+    &__status {
+        margin-top: 10px;
+        span {
+            font-weight: bold;
+        }
+    }
+    &__priority {
+        span {
+            font-weight: bold;
+        }
+    }
+    &__main {
+        padding: 0 15px 0 15px;
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: 185px 500px 185px;
+        column-gap: 39px;
+    }
+    &__subTasks, &__files {
+        box-shadow: 1px 1px 20px gray;
+        border-radius: 10px;
+        padding: 10px;
+        h2 {
+            font-size: 18px;
+        }
+        hr {
+            margin: 5px 0 5px 0;
+        }
+        li {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    }
+    &__descr {
+        position: relative;
+        &_more {
+            margin-top: 10px;
+        }
+    }
+    &__text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+    &__comments {
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
