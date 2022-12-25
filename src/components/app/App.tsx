@@ -5,9 +5,9 @@ import Task from '../task/Task';
 function App() {
     return (
         <div className='app'>
-            {/* <Projects/> */}
+            <Projects/>
             {/* <Tasks/> */}
-            <Task/>
+            {/* <Task/> */}
         </div>
     )
 }

@@ -1,5 +1,25 @@
 .projects {
     padding: 30px 400px;
+    &__modal {
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        border-radius: 5px;
+        width: 200px;
+        height: 100px;
+        background-color: rgb(211, 211, 211);
+        z-index: 100;
+        button {
+            &:nth-child(2) {
+                margin-right: 10px;
+            }
+        }
+    }
     &__title {
         text-shadow: 2px 2px 5px rgb(139, 139, 139);
     }
