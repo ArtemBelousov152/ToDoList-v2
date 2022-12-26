@@ -1,13 +1,16 @@
 import './App.scss';
 import { Projects, Tasks } from '../pages';
 import Task from '../task/Task';
+import { Route, Routes } from "react-router-dom";
 
 function App() {
     return (
         <div className='app'>
-            <Projects/>
-            {/* <Tasks/> */}
-            {/* <Task/> */}
+            <Routes>
+                <Route path='/' element={<Projects/>}/>
+                <Route path='/tasks/:id' element={<Tasks/>}/>
+                <Route/>
+            </Routes>
         </div>
     )
 }

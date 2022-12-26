@@ -31,6 +31,7 @@
         margin-top: 30px;
     }
     &__item {
+        position: relative;
         cursor: pointer;
         width: 230px;
         box-shadow: 2px 2px 15px black;
@@ -39,6 +40,8 @@
     }
     &__name {
         font-size: 22px;
+        word-wrap: break-word;
+        margin-top: 20px;
     }
     &__tasks {
         font-size: 20px;
@@ -55,5 +58,25 @@
         width: 150px;
         height: 50px;
         border-radius: 10px
+    }
+    &__close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+                span {
+                    display: block;
+                    background-color: rgb(105, 105, 105);
+                    width: 20px;
+                    height: 4px;
+                    transform: rotate(45deg) translateX(3px);
+                    &:nth-child(2) {
+                        transform: rotate(-45deg) translateX(2.5px);
+                    }
+                }
+    }
+    &__about {
+        text-decoration: none;
+        color: blueviolet
     }
 }

@@ -15,7 +15,10 @@ export const todoSlice = createSlice({
     reducers: {
         addProject(state, action: PayloadAction<IProject>) {
             state.projects = [...state.projects, action.payload]
-        }
+        },
+        delProject(state, action: PayloadAction<string>) {
+            state.projects = state.projects.filter(item => item.id !== action.payload)
+        },
     }
 })
 
