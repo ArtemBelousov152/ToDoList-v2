@@ -1,5 +1,29 @@
 .tasks {
     padding: 20px 50px;
+    &__modal {
+        padding: 10px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        border-radius: 5px;
+        width: 300px;
+        height: 200px;
+        background-color: rgb(211, 211, 211);
+        z-index: 100;
+        input {
+            width: 90%;
+        }
+        button {
+            &:nth-child(1) {
+                margin-right: 10px;
+            }
+        }
+    }
     &__header {
         display: grid;
         grid-template-columns: repeat(3, 606px);

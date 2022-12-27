@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IProject } from '../../../models';
+import { IProject, } from "../../../models/project";
 import { v4 as uuidv4 } from 'uuid';
 import { todoSlice } from '../../../store/reducers/todoSlice';
 import { Link } from 'react-router-dom';
@@ -26,8 +26,8 @@ function Projects() {
     }
 
     const closeModal = () => {
-        setModal(false)
-        setNewProjectName('')
+        setModal(false);
+        setNewProjectName('');
     }
 
     const renderTaskList = (index: number) => {
@@ -80,23 +80,24 @@ function Projects() {
         }
     }
 
-    const modalWindow = modal ? <div className="projects__modal">
-        <input
-            type="text"
-            name="name"
-            id="name"
-            onChange={(e) => setNewProjectName(e.target.value)} />
-        <button
-            onClick={createProject}
-            disabled={!Boolean(newProjectName)}>
-            Создать
-        </button>
-        <button
-            onClick={closeModal}>
-            Отмена
-        </button>
-    </div>
-        : null;
+    const modalWindow = modal ? 
+                                <div className="projects__modal">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        onChange={(e) => setNewProjectName(e.target.value)} />
+                                    <button
+                                        onClick={createProject}
+                                        disabled={!Boolean(newProjectName)}>
+                                        Создать
+                                    </button>
+                                    <button
+                                        onClick={closeModal}>
+                                        Отмена
+                                    </button>
+                                </div>
+                            : null;
 
     return (
         <div className='projects'>

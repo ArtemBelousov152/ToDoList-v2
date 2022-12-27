@@ -18,7 +18,7 @@ export enum state {
 
 export interface ITusk {
     title: string;
-    id: number;
+    id: string;
     number: number;
     startDate: string;
     endDate: string;
