@@ -12,7 +12,7 @@ import './tasks.scss';
 
 function Tasks() {
     const [modal, setModal] = useState<boolean>(false);
-    const [project, setProject] = useState<IProject>({id: '',tasks:[],title:'as'});
+    const [project, setProject] = useState<IProject>({id: '', tasks:[], title:'as'});
     const [newTaskName, setNewTaskName] = useState<string>('');
     const [newTaskDescr, setNewTaskDescr] = useState<string>('');
     const {id} = useParams();
@@ -26,7 +26,7 @@ function Tasks() {
                 setProject(item)
             }
         })
-    },[id])
+    },[projects])
 
     const createTask = () => {
         const nowDate = new Date().toLocaleDateString();
@@ -37,7 +37,7 @@ function Tasks() {
             priority: priority.OPTIONAL,
             state: state.QUEUE,
             status: status.INPROGRESS,
-            number: project.tasks.length,
+            number: project.tasks.length + 1,
             startDate: nowDate,
             endDate: 'agsdffg',
             timeInWork: 60
@@ -76,6 +76,23 @@ function Tasks() {
                         </div>
                             : null;
 
+    const renderTasks = () => {
+        return (
+            project.tasks.map(item => {
+                return <MinTask
+                                descr={item.descr}
+                                number={item.number}
+                                priority={item.priority}
+                                startDate={item.startDate}
+                                timeInWork={item.timeInWork}
+                                title={item.title}
+                                key={item.id}
+                                id={item.id}
+                                projectId={id}/>
+            })
+        )
+    }
+
     return (
         <div className='tasks'>
             {modalWindow}
@@ -91,7 +108,7 @@ function Tasks() {
                 <div className="tasks__dgar_block">
                     <h2 className="tasks__drag_name">Queue</h2>
                     <ul className="tasks__drag_area">
-                        <MinTask />
+                        {renderTasks()}
                     </ul>
                 </div>
                 <div className="tasks__dgar_block">

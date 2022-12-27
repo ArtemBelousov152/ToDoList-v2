@@ -11,6 +11,11 @@ interface IAddTaskPayload {
     task: ITusk
 }
 
+interface IDelTaskPayload {
+    projectId: string | undefined
+    taskId: string
+}
+
 const initialState: todoState = {
     projects: []
 }
@@ -30,6 +35,14 @@ export const todoSlice = createSlice({
                 return item.id === action.payload.projectId
             })
             state.projects[projectId].tasks.push(action.payload.task)
+        },
+        delTask(state, action: PayloadAction<IDelTaskPayload>) {
+            const projectId = state.projects.findIndex((item) => {
+                return item.id === action.payload.projectId
+            })
+            state.projects[projectId].tasks = state.projects[projectId].tasks.filter(item => {
+                return item.id !== action.payload.taskId
+            })
         }
     }
 })
