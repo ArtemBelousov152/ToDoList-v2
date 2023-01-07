@@ -3,21 +3,29 @@ import { ITusk } from '../../models/task';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface todoState {
-    projects: IProject[]
+    projects: IProject[],
+    modalTodoIsOpen: boolean,
+    modalAddTodoIsOpen: boolean,
+    modalTaskId: string,
+    activeTask: ITusk | null
 } 
 
 interface IAddTaskPayload {
-    projectId: string | undefined
+    projectId: string
     task: ITusk
 }
 
-interface IDelTaskPayload {
-    projectId: string | undefined
+interface IDTaskPayload {
+    projectId: string
     taskId: string
 }
 
 const initialState: todoState = {
-    projects: []
+    projects: [],
+    modalTodoIsOpen: false,
+    modalAddTodoIsOpen: false,
+    modalTaskId: '',
+    activeTask: null
 }
 
 export const todoSlice = createSlice({
@@ -36,14 +44,30 @@ export const todoSlice = createSlice({
             })
             state.projects[projectId].tasks.push(action.payload.task)
         },
-        delTask(state, action: PayloadAction<IDelTaskPayload>) {
+        delTask(state, action: PayloadAction<IDTaskPayload>) {
             const projectId = state.projects.findIndex((item) => {
                 return item.id === action.payload.projectId
             })
             state.projects[projectId].tasks = state.projects[projectId].tasks.filter(item => {
                 return item.id !== action.payload.taskId
             })
-        }
+        },
+        setActiveTask(state, action: PayloadAction<IDTaskPayload>) {
+            const {projectId, taskId} = action.payload
+            
+        }, 
+        openModalTodo(state) {
+            state.modalTodoIsOpen = true
+        },
+        closeModalTodo(state) {
+            state.modalTodoIsOpen = false
+        },
+        openModalAddTodo(state) {
+            state.modalAddTodoIsOpen = true
+        },
+        closeModalAddTodo(state) {
+            state.modalAddTodoIsOpen = false
+        },
     }
 })
 

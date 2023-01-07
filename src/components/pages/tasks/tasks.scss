@@ -1,5 +1,10 @@
 .tasks {
     padding: 20px 50px;
+    &__modalTask {
+        position: absolute;
+        top: 55px;
+        left: 270px;
+    }
     &__modal {
         padding: 10px;
         left: 50%;
@@ -38,15 +43,19 @@
         justify-self: center;
     }
     &__drag {
+        &__block {
+            min-height: 600px;
+        }
         &_zone {
             margin-top: 50px;
+            position: relative;
             display: grid;
             grid-template-columns: repeat(3, 500px);
             justify-content: center;
         }
         &_area {
             width: 500px;
-            min-height: 100vh;
+            height: 100%;
             margin-top: 30px;
             display: flex;
             flex-direction: column;

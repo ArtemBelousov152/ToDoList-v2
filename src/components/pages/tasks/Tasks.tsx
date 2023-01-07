@@ -4,107 +4,69 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect, useState } from 'react';
 import { todoSlice } from '../../../store/reducers/todoSlice';
-import { v4 as uuidv4 } from 'uuid';
 import { IProject, } from "../../../models/project";
-import { ITusk, priority, state, status } from '../../../models/task';
 
 import './tasks.scss';
+import Task from '../../task/Task';
+import { ModalAddTodo } from '../../modalAddTask/ModalAddTodo';
 
 function Tasks() {
-    const [modal, setModal] = useState<boolean>(false);
-    const [project, setProject] = useState<IProject>({id: '', tasks:[], title:'as'});
-    const [newTaskName, setNewTaskName] = useState<string>('');
-    const [newTaskDescr, setNewTaskDescr] = useState<string>('');
-    const {id} = useParams();
-    const {projects} = useAppSelector(state => state.todoReducer)
-    const dispatch = useAppDispatch();
-    const {addTask} = todoSlice.actions;
+    const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as' });
 
+    const { id } = useParams() as {id: string};
+    const { projects, modalAddTodoIsOpen, modalTodoIsOpen } = useAppSelector(state => state.todoReducer)
+    const dispatch = useAppDispatch();
+    const { openModalAddTodo } = todoSlice.actions;
     useEffect(() => {
         projects.forEach(item => {
             if (item.id === id) {
                 setProject(item)
             }
         })
-    },[projects])
+    }, [projects])
 
-    const createTask = () => {
-        const nowDate = new Date().toLocaleDateString();
-        const newTask: ITusk = {
-            title: newTaskName,
-            descr: newTaskDescr,
-            id: uuidv4(),
-            priority: priority.OPTIONAL,
-            state: state.QUEUE,
-            status: status.INPROGRESS,
-            number: project.tasks.length + 1,
-            startDate: nowDate,
-            endDate: 'agsdffg',
-            timeInWork: 60
-        }
-        dispatch(addTask({projectId: id, task: newTask}))
-        closeModal();
-    }
-
-    const closeModal = () => {
-        setModal(false);
-        setNewTaskName('');
-        setNewTaskDescr('');
-    }
-
-    const modalWindow = modal ? 
-                        <div className="tasks__modal">
-                            <label htmlFor="title">Имя задачи</label>
-                            <input
-                                type="text"
-                                id="title"
-                                onChange={(e) => setNewTaskName(e.target.value)}/>
-                            <label htmlFor="descr">Описание задачи</label>
-                            <input 
-                                type="text" 
-                                id="descr"
-                                onChange={(e) => setNewTaskDescr(e.target.value)}/>
-                            <button
-                                onClick={createTask}
-                                disabled={!Boolean(newTaskName && newTaskDescr)}>
-                                Создать
-                            </button>
-                            <button
-                                onClick={closeModal}>
-                                Отмена
-                            </button>
-                        </div>
-                            : null;
+    const modalWindowAddTodo = modalAddTodoIsOpen ?
+        <ModalAddTodo
+            id={id}
+            project={project} />
+        : null;
+    
+    const modalWindowTask = modalTodoIsOpen ? 
+        <Task/> 
+        : null
 
     const renderTasks = () => {
         return (
             project.tasks.map(item => {
                 return <MinTask
-                                descr={item.descr}
-                                number={item.number}
-                                priority={item.priority}
-                                startDate={item.startDate}
-                                timeInWork={item.timeInWork}
-                                title={item.title}
-                                key={item.id}
-                                id={item.id}
-                                projectId={id}/>
+                    descr={item.descr}
+                    number={item.number}
+                    priority={item.priority}
+                    startDate={item.startDate}
+                    timeInWork={item.timeInWork}
+                    title={item.title}
+                    key={item.id}
+                    id={item.id}
+                    projectId={id} />
             })
         )
     }
 
     return (
         <div className='tasks'>
-            {modalWindow}
+            {modalWindowAddTodo}
             <div className="tasks__header">
                 <h1 className='tasks__name'>{project?.title}</h1>
-                <button 
+                <button
                     className="tasks__add"
-                    onClick={() => setModal(true)}>
-                        Добавить задачу</button>
+                    onClick={() => dispatch(openModalAddTodo())}>
+                    Добавить задачу</button>
                 <Status />
             </div>
             <div className="tasks__drag_zone">
+                <div className="tasks__modalTask">
+                    {modalWindowTask}
+                </div>
                 <div className="tasks__dgar_block">
                     <h2 className="tasks__drag_name">Queue</h2>
                     <ul className="tasks__drag_area">
@@ -119,7 +81,9 @@ function Tasks() {
                 </div>
                 <div className="tasks__dgar_nlock">
                     <h2 className="tasks__drag_name">Done</h2>
-                    <ul className="tasks__drag_area"></ul>
+                    <ul className="tasks__drag_area">
+
+                    </ul>
                 </div>
             </div>
         </div>

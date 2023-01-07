@@ -1,5 +1,5 @@
 import Status from '../status/Status';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { FC } from 'react';
 import { todoSlice } from '../../store/reducers/todoSlice';
 
@@ -13,19 +13,24 @@ interface IPropsMinTask {
     startDate: string
     timeInWork: number
     id: string
-    projectId: string | undefined
+    projectId: string
 }
 
-const MinTask:FC<IPropsMinTask> = ({number, descr, priority, startDate, timeInWork, title, id, projectId}) => {
+const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, projectId }) => {
     const dispatch = useAppDispatch();
-    const {delTask} = todoSlice.actions
+    const { delTask, openModalTodo, setActiveTask } = todoSlice.actions;
+
+    const aboutTask = () => {
+        dispatch(setActiveTask({projectId: projectId, taskId: id}))
+        dispatch(openModalTodo())
+    }
 
     return (
         <li className="minTask">
             <div className="minTask__header">
                 <div className="minTask__number">№{number}</div>
                 <h2 className="minTask__header">{title}</h2>
-                <Status min={true}/>
+                <Status min={true} />
             </div>
             <div className="minTask__descr">
                 {descr}
@@ -40,13 +45,17 @@ const MinTask:FC<IPropsMinTask> = ({number, descr, priority, startDate, timeInWo
                 Время в работе: {timeInWork} часов
             </div>
             <div className="minTask__footer">
-                <button 
+                <button
                     className="minTask__del"
-                    onClick={() => {dispatch(delTask({taskId: id, projectId: projectId}))}}>Удалить задачу</button>
-                <button className="minTask__about">Подробнее</button>
+                    onClick={() => { dispatch(delTask({ taskId: id, projectId: projectId })) }}>Удалить задачу</button>
+                <button
+                    className="minTask__about"
+                    onClick={aboutTask}
+                >
+                    Подробнее</button>
             </div>
         </li>
-  )
+    )
 }
 
 export default MinTask

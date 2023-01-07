@@ -4,6 +4,9 @@
     height: 300px;
     border: 1px solid black;
     padding: 10px;
+    z-index: 10;
+    background-color: #fff;
+    position: relative;
     &__header {
         display: grid;
         grid-template-columns: 30px 160px 160px 277px 160px 160px 30px;
