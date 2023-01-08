@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import './projects.scss';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { status } from '../../../models/enums';
 
 function Projects() {
     const [modal, setModal] = useState<boolean>(false);
@@ -18,7 +19,8 @@ function Projects() {
         const newProject: IProject = {
             id: uuidv4(),
             title: newProjectName,
-            tasks: []
+            tasks: [],
+            status: status.INPROGRESS
         }
 
         dispatch(addProject(newProject));

@@ -1,20 +1,5 @@
-export enum priority {
-    IMPORTANT = "Важно",
-    URGENTLY = "Срочно",
-    OPTIONAL = "Необязательно"
-}
+import { priority, state, status } from "./enums";
 
-export enum status {
-    DONE = "Выполнен",
-    INPROGRESS = "В работе",
-    FAILD = "Провалено"
-}
-
-export enum state {
-    QUEUE = "Queue",
-    DEVELOPMENT = 'Development',
-    DONE = 'Done'
-}
 
 export interface ITusk {
     title: string;

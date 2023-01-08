@@ -31,13 +31,13 @@
     }
     &__header {
         display: grid;
-        grid-template-columns: repeat(3, 606px);
+        grid-template-columns: repeat(4, 454.5px);
     }
     &__name {
         font-size: 30px;
         justify-self: left;
     }
-    &__add {
+    &__add, &__back {
         width: 300px;
         border-radius: 10px;
         justify-self: center;

@@ -5,22 +5,27 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect, useState } from 'react';
 import { todoSlice } from '../../../store/reducers/todoSlice';
 import { IProject, } from "../../../models/project";
-
-import './tasks.scss';
 import Task from '../../task/Task';
 import { ModalAddTodo } from '../../modalAddTask/ModalAddTodo';
+import { status } from '../../../models/enums';
+import { useNavigate } from 'react-router-dom';
+
+import './tasks.scss';
+
 
 function Tasks() {
-    const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as' });
-
-    const { id } = useParams() as {id: string};
+    const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as', status: status.INPROGRESS });
+    const { id } = useParams() as { id: string };
     const { projects, modalAddTodoIsOpen, modalTodoIsOpen } = useAppSelector(state => state.todoReducer)
     const dispatch = useAppDispatch();
-    const { openModalAddTodo } = todoSlice.actions;
+    const { openModalAddTodo, closeModalTodo, setActiveProjectId } = todoSlice.actions;
+    const navigate = useNavigate();
+
     useEffect(() => {
         projects.forEach(item => {
             if (item.id === id) {
                 setProject(item)
+                dispatch(setActiveProjectId(id))
             }
         })
     }, [projects])
@@ -30,9 +35,9 @@ function Tasks() {
             id={id}
             project={project} />
         : null;
-    
-    const modalWindowTask = modalTodoIsOpen ? 
-        <Task/> 
+
+    const modalWindowTask = modalTodoIsOpen ?
+        <Task />
         : null
 
     const renderTasks = () => {
@@ -47,21 +52,30 @@ function Tasks() {
                     title={item.title}
                     key={item.id}
                     id={item.id}
-                    projectId={id} />
+                    projectId={id}
+                    status={item.status} />
             })
         )
+    }
+
+    const backToProjects = () => {
+        navigate('/')
+        dispatch(closeModalTodo())
     }
 
     return (
         <div className='tasks'>
             {modalWindowAddTodo}
             <div className="tasks__header">
-                <h1 className='tasks__name'>{project?.title}</h1>
+                <h1 className='tasks__name'>{project.title}</h1>
+                <button
+                    className='tasks__back'
+                    onClick={backToProjects}>К проектам</button>
                 <button
                     className="tasks__add"
                     onClick={() => dispatch(openModalAddTodo())}>
                     Добавить задачу</button>
-                <Status />
+                <Status position={project.status} />
             </div>
             <div className="tasks__drag_zone">
                 <div className="tasks__modalTask">

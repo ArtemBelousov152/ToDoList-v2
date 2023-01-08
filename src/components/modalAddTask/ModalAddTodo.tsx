@@ -1,11 +1,12 @@
 import { useState, FC } from 'react'
-import { ITusk, priority, state, status } from '../../models/task';
+import { priority, state, status } from '../../models/enums';
 import { v4 as uuidv4 } from 'uuid';
 
 import './modalAddTodo.scss'
 import { useAppDispatch } from '../../hooks/redux';
 import { IProject } from '../../models/project';
 import { todoSlice } from '../../store/reducers/todoSlice';
+import { ITusk } from '../../models/task';
 
 interface modalAddTodoProps {
     id: string;

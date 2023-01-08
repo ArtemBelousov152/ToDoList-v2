@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { todoSlice } from '../../store/reducers/todoSlice';
 
 import './minTask.scss';
+import { status } from '../../models/enums';
 
 interface IPropsMinTask {
     number: number
@@ -14,14 +15,15 @@ interface IPropsMinTask {
     timeInWork: number
     id: string
     projectId: string
+    status: status
 }
 
-const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, projectId }) => {
+const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, projectId, status }) => {
     const dispatch = useAppDispatch();
     const { delTask, openModalTodo, setActiveTask } = todoSlice.actions;
 
     const aboutTask = () => {
-        dispatch(setActiveTask({projectId: projectId, taskId: id}))
+        dispatch(setActiveTask(id))
         dispatch(openModalTodo())
     }
 
@@ -30,7 +32,7 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
             <div className="minTask__header">
                 <div className="minTask__number">№{number}</div>
                 <h2 className="minTask__header">{title}</h2>
-                <Status min={true} />
+                <Status min={true} position={status}/>
             </div>
             <div className="minTask__descr">
                 {descr}

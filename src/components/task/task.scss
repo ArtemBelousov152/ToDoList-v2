@@ -55,6 +55,10 @@
             margin-top: 10px;
         }
     }
+    &__input {
+        width: 100%;
+        text-overflow: ellipsis;
+    }
     &__text {
         overflow: hidden;
         text-overflow: ellipsis;

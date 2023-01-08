@@ -1,7 +1,6 @@
 .status {
     width: 40px;
     height: 40px;
-    background: #F0F427;
     border: 1px solid #000000;
     cursor: pointer;
     border-radius: 50%;
@@ -9,5 +8,14 @@
     &__mini {
         width: 25px;
         height: 25px;
+    }
+    &__failed {
+        background: 'red';
+    }
+    &__inProcess {
+        background: #F0F427;
+    }
+    &__done {
+        background: 'green';
     }
 }
