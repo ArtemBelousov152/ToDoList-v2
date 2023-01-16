@@ -1,16 +1,14 @@
-import { useState, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { todoSlice } from '../../store/reducers/todoSlice';
+import DescrEditor from '../descrEditod/DescrEditor';
 import Status from '../status/Status';
 
 import './task.scss';
 
 const Task = () => {
-    const { activeTask } = useAppSelector(state => state.todoReducer);
-    const [editDescr, setEditDescr] = useState<boolean>(false);
-    const [editDescrValue, setEditDescrValue] = useState<string | undefined>(activeTask?.descr);
+    const { activeTask, isDescrEdit } = useAppSelector(state => state.todoReducer);
     const dispatch = useAppDispatch();
-    const { closeModalTodo } = todoSlice.actions;
+    const { closeModalTodo, openDescrEdit } = todoSlice.actions;
 
     if (activeTask === null) {
         return (
@@ -18,25 +16,12 @@ const Task = () => {
         )
     }
 
+    const editDescr = () => {
+        dispatch(openDescrEdit())
+    }
+
     const closeTask = () => {
         dispatch(closeModalTodo())
-    }
-
-    const descrInputChangeValue = (e: FormEvent<HTMLInputElement>) => {
-        setEditDescrValue(e.currentTarget.value)
-    }
-
-    const renderDescr = () => {
-
-        return (
-            editDescr ? <input
-                className="task__input"
-                value={editDescrValue}
-                onChange={descrInputChangeValue} />
-                : <div className="task__text">
-                    {activeTask.descr}
-                </div>
-        )
     }
 
     const renderTask = () => {
@@ -77,11 +62,13 @@ const Task = () => {
                         </ul>
                     </div>
                     <div className="task__descr">
-                        {renderDescr()}
-                        <button className='task__descr_more'>Подробнее</button>
-                        <button className='task__comments'>Комментарии</button>
-                        <button onClick={closeTask}>Закрыть</button>
-                        <button onClick={() => setEditDescr(true)}>Редактировать описание</button>
+                        {activeTask.descr}
+                        <div className="task__buttons">
+                            <button className='task__descr_more'>Подробнее</button>
+                            <button className='task__comments'>Комментарии</button>
+                            <button onClick={editDescr}>Изменить описание</button>
+                            <button onClick={closeTask}>Закрыть</button>
+                        </div>
                     </div>
                     <div className="task__files">
                         <h2>Файлы</h2>
@@ -93,6 +80,9 @@ const Task = () => {
                             <button>Подробнее</button>
                         </ul>
                     </div>
+                </div>
+                <div className="task__editDescr">
+                    {isDescrEdit ? <DescrEditor/> : null}
                 </div>
             </div>
         )

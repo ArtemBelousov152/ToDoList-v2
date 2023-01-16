@@ -14,11 +14,10 @@ interface IPropsMinTask {
     startDate: string
     timeInWork: number
     id: string
-    projectId: string
     status: status
 }
 
-const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, projectId, status }) => {
+const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, status }) => {
     const dispatch = useAppDispatch();
     const { delTask, openModalTodo, setActiveTask } = todoSlice.actions;
 
@@ -28,7 +27,7 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
     }
 
     return (
-        <li className="minTask">
+        <li className="minTask" draggable={true}>
             <div className="minTask__header">
                 <div className="minTask__number">№{number}</div>
                 <h2 className="minTask__header">{title}</h2>
@@ -49,7 +48,7 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
             <div className="minTask__footer">
                 <button
                     className="minTask__del"
-                    onClick={() => { dispatch(delTask({ taskId: id, projectId: projectId })) }}>Удалить задачу</button>
+                    onClick={() => { dispatch(delTask(id)) }}>Удалить задачу</button>
                 <button
                     className="minTask__about"
                     onClick={aboutTask}

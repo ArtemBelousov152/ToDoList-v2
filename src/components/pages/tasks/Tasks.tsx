@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 
 import './tasks.scss';
 
-
 function Tasks() {
     const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as', status: status.INPROGRESS });
     const { id } = useParams() as { id: string };
@@ -22,10 +21,10 @@ function Tasks() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        projects.forEach(item => {
+        projects.forEach((item, index) => {
             if (item.id === id) {
                 setProject(item)
-                dispatch(setActiveProjectId(id))
+                dispatch(setActiveProjectId(index))
             }
         })
     }, [projects])
@@ -52,7 +51,6 @@ function Tasks() {
                     title={item.title}
                     key={item.id}
                     id={item.id}
-                    projectId={id}
                     status={item.status} />
             })
         )
@@ -77,26 +75,28 @@ function Tasks() {
                     Добавить задачу</button>
                 <Status position={project.status} />
             </div>
-            <div className="tasks__drag_zone">
-                <div className="tasks__modalTask">
+            <div className="tasks__names">
+                <h2>Queue</h2>
+                <h2>Development</h2>
+                <h2>Done</h2>
+            </div>
+            <div className="tasks__modalTask">
                     {modalWindowTask}
                 </div>
+            <div className="tasks__drag_zone">
                 <div className="tasks__dgar_block">
-                    <h2 className="tasks__drag_name">Queue</h2>
                     <ul className="tasks__drag_area">
-                        {renderTasks()}
+                        
                     </ul>
                 </div>
                 <div className="tasks__dgar_block">
-                    <h2 className="tasks__drag_name">Development</h2>
                     <ul className="tasks__drag_area tasks__drag_center">
-
+                    
                     </ul>
                 </div>
                 <div className="tasks__dgar_nlock">
-                    <h2 className="tasks__drag_name">Done</h2>
                     <ul className="tasks__drag_area">
-
+                    {renderTasks()}
                     </ul>
                 </div>
             </div>

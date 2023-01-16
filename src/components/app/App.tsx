@@ -1,6 +1,5 @@
 import './App.scss';
 import { Projects, Tasks } from '../pages';
-import Task from '../task/Task';
 import { Route, Routes } from "react-router-dom";
 
 function App() {

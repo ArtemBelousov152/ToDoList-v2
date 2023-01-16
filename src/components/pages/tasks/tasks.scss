@@ -2,8 +2,8 @@
     padding: 20px 50px;
     &__modalTask {
         position: absolute;
-        top: 55px;
-        left: 270px;
+        top: 200px;
+        left: 450px;
     }
     &__modal {
         padding: 10px;
@@ -29,6 +29,11 @@
             }
         }
     }
+    &__names {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 50px;
+    }
     &__header {
         display: grid;
         grid-template-columns: repeat(4, 454.5px);
@@ -47,7 +52,7 @@
             min-height: 600px;
         }
         &_zone {
-            margin-top: 50px;
+            margin-top: 10px;
             position: relative;
             display: grid;
             grid-template-columns: repeat(3, 500px);

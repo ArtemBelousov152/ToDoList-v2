@@ -8,8 +8,10 @@ interface todoState {
     modalAddTodoIsOpen: boolean;
     modalTaskId: string;
     activeTask: ITusk | null;
+    activeProject: IProject | null;
     activeProjectIndex: number;
     activeTaskIndex: number;
+    isDescrEdit: boolean;
 }
 
 interface IAddTaskPayload {
@@ -29,7 +31,9 @@ const initialState: todoState = {
     modalTaskId: '',
     activeTask: null,
     activeProjectIndex: 0,
-    activeTaskIndex: 0
+    activeTaskIndex: 0,
+    isDescrEdit: false,
+    activeProject: null
 }
 
 export const todoSlice = createSlice({
@@ -49,19 +53,14 @@ export const todoSlice = createSlice({
 
             state.projects[projectIndex].tasks.push(action.payload.task)
         },
-        delTask(state, action: PayloadAction<IDTaskPayload>) {
-            const projectIndex = state.projects.findIndex((item) => {
-                return item.id === action.payload.projectId
-            })
+        delTask(state, action: PayloadAction<string>) {
 
-            state.projects[projectIndex].tasks = state.projects[projectIndex].tasks.filter(item => {
-                return item.id !== action.payload.taskId
+            state.projects[state.activeProjectIndex].tasks = state.projects[state.activeProjectIndex].tasks.filter(item => {
+                return item.id !== action.payload
             })
         },
-        setActiveProjectId(state, action: PayloadAction<string>) {
-            state.activeProjectIndex = state.projects.findIndex(item => {
-                return item.id === action.payload
-            })
+        setActiveProjectId(state, action: PayloadAction<number>) {
+            state.activeProjectIndex = action.payload
         },
         setActiveTask(state, action: PayloadAction<string>) {
             const taskIndex = state.projects[state.activeProjectIndex].tasks.findIndex(item => {
@@ -83,6 +82,11 @@ export const todoSlice = createSlice({
             if (state.activeTask !== null) {
                 state.projects[activeProjectIndex].tasks[activeTaskIndex] = state.activeTask
             }
+
+            if (state.activeProject !== null && state.activeTask !== null) {
+                state.activeProject.tasks[activeTaskIndex] = state.activeTask
+            }
+            
             state.modalTodoIsOpen = false
         },
         openModalAddTodo(state) {
@@ -95,7 +99,14 @@ export const todoSlice = createSlice({
             if (state.activeTask !== null) {
                 state.activeTask.descr = action.payload
             }
+        },
+        openDescrEdit(state) {
+            state.isDescrEdit = true;
+        },
+        closeDescrEdit(state) {
+            state.isDescrEdit = false;
         }
+
     }
 })
 

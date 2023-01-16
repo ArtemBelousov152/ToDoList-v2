@@ -1,0 +1,15 @@
+.editor {
+    width: 500px;
+    height: 260px;
+    box-shadow: 1px 1px 5px gray, 1px 1px 5px gray;
+    display: grid;
+    border-radius: 10px;
+    grid-template-rows: 200px auto;
+    background-color: #fff;
+    row-gap: 10px;
+    &__buttons {
+        height: 40px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
