@@ -11,11 +11,12 @@ import { status } from '../../../models/enums';
 import { useNavigate } from 'react-router-dom';
 
 import './tasks.scss';
+import TasksBoard from '../../tasksBoard/TasksBoard';
 
 function Tasks() {
     const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as', status: status.INPROGRESS });
     const { id } = useParams() as { id: string };
-    const { projects, modalAddTodoIsOpen, modalTodoIsOpen } = useAppSelector(state => state.todoReducer)
+    const { projects, modalAddTodoIsOpen, modalTodoIsOpen, activeProjectIndex } = useAppSelector(state => state.todoReducer)
     const dispatch = useAppDispatch();
     const { openModalAddTodo, closeModalTodo, setActiveProjectId } = todoSlice.actions;
     const navigate = useNavigate();
@@ -24,7 +25,9 @@ function Tasks() {
         projects.forEach((item, index) => {
             if (item.id === id) {
                 setProject(item)
-                dispatch(setActiveProjectId(index))
+                if (index !== activeProjectIndex) {
+                    dispatch(setActiveProjectId(index))
+                }
             }
         })
     }, [projects])
@@ -38,23 +41,6 @@ function Tasks() {
     const modalWindowTask = modalTodoIsOpen ?
         <Task />
         : null
-
-    const renderTasks = () => {
-        return (
-            project.tasks.map(item => {
-                return <MinTask
-                    descr={item.descr}
-                    number={item.number}
-                    priority={item.priority}
-                    startDate={item.startDate}
-                    timeInWork={item.timeInWork}
-                    title={item.title}
-                    key={item.id}
-                    id={item.id}
-                    status={item.status} />
-            })
-        )
-    }
 
     const backToProjects = () => {
         navigate('/')
@@ -83,23 +69,7 @@ function Tasks() {
             <div className="tasks__modalTask">
                     {modalWindowTask}
                 </div>
-            <div className="tasks__drag_zone">
-                <div className="tasks__dgar_block">
-                    <ul className="tasks__drag_area">
-                        
-                    </ul>
-                </div>
-                <div className="tasks__dgar_block">
-                    <ul className="tasks__drag_area tasks__drag_center">
-                    
-                    </ul>
-                </div>
-                <div className="tasks__dgar_nlock">
-                    <ul className="tasks__drag_area">
-                    {renderTasks()}
-                    </ul>
-                </div>
-            </div>
+            <TasksBoard project={project}/>
         </div>
     )
 }

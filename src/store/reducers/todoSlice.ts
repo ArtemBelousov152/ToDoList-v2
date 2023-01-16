@@ -7,8 +7,7 @@ interface todoState {
     modalTodoIsOpen: boolean;
     modalAddTodoIsOpen: boolean;
     modalTaskId: string;
-    activeTask: ITusk | null;
-    activeProject: IProject | null;
+    activeTask: ITusk | null | undefined;
     activeProjectIndex: number;
     activeTaskIndex: number;
     isDescrEdit: boolean;
@@ -19,9 +18,9 @@ interface IAddTaskPayload {
     task: ITusk;
 }
 
-interface IDTaskPayload {
-    projectId: string;
-    taskId: string;
+interface IEditTaskBoard {
+    taskIndex: number;
+    newTask: ITusk;
 }
 
 const initialState: todoState = {
@@ -33,7 +32,6 @@ const initialState: todoState = {
     activeProjectIndex: 0,
     activeTaskIndex: 0,
     isDescrEdit: false,
-    activeProject: null
 }
 
 export const todoSlice = createSlice({
@@ -54,7 +52,6 @@ export const todoSlice = createSlice({
             state.projects[projectIndex].tasks.push(action.payload.task)
         },
         delTask(state, action: PayloadAction<string>) {
-
             state.projects[state.activeProjectIndex].tasks = state.projects[state.activeProjectIndex].tasks.filter(item => {
                 return item.id !== action.payload
             })
@@ -73,18 +70,17 @@ export const todoSlice = createSlice({
             state.activeTaskIndex = taskIndex
 
         },
+        editTaskBoard(state, action: PayloadAction<IEditTaskBoard>) {
+            state.projects[state.activeProjectIndex].tasks[action.payload.taskIndex] = action.payload.newTask;
+        },
         openModalTodo(state) {
             state.modalTodoIsOpen = true
         },
         closeModalTodo(state) {
             const { activeProjectIndex, activeTaskIndex } = state
 
-            if (state.activeTask !== null) {
+            if (state.activeTask) {
                 state.projects[activeProjectIndex].tasks[activeTaskIndex] = state.activeTask
-            }
-
-            if (state.activeProject !== null && state.activeTask !== null) {
-                state.activeProject.tasks[activeTaskIndex] = state.activeTask
             }
             
             state.modalTodoIsOpen = false
@@ -96,7 +92,7 @@ export const todoSlice = createSlice({
             state.modalAddTodoIsOpen = false
         },
         editTaskDescr(state, action: PayloadAction<string>) {
-            if (state.activeTask !== null) {
+            if (state.activeTask) {
                 state.activeTask.descr = action.payload
             }
         },

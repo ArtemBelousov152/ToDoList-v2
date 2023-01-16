@@ -27,7 +27,7 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
     }
 
     return (
-        <li className="minTask" draggable={true}>
+        <li className="minTask">
             <div className="minTask__header">
                 <div className="minTask__number">№{number}</div>
                 <h2 className="minTask__header">{title}</h2>

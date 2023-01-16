@@ -10,7 +10,7 @@ const Task = () => {
     const dispatch = useAppDispatch();
     const { closeModalTodo, openDescrEdit } = todoSlice.actions;
 
-    if (activeTask === null) {
+    if (!activeTask) {
         return (
             <h2>Что-то пошло не так</h2>
         )

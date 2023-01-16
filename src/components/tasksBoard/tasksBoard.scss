@@ -1,0 +1,26 @@
+.tasksBoard {
+    &__drag {
+        &__block {
+            min-height: 600px;
+        }
+
+        &_zone {
+            margin-top: 10px;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, 500px);
+            justify-content: center;
+        }
+
+        &_area {
+            width: 500px;
+            height: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+        }
+    }
+}
