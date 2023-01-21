@@ -5,7 +5,7 @@ import { state } from '../../models/enums';
 import { v4 as uuidv4 } from 'uuid';
 import { IBoardItem } from '../../models/board';
 import { ITusk } from '../../models/task';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { todoSlice } from '../../store/reducers/todoSlice';
 
 import './tasksBoard.scss';
@@ -20,6 +20,7 @@ const TasksBoard = ({ project }: TasksBoardProps) => {
     const [currentItem, setCurrentItem] = useState<ITusk>();
     const dispatch = useAppDispatch();
     const { editTaskBoard } = todoSlice.actions;
+    const { modalTodoIsOpen } = useAppSelector(state => state.todoReducer);
 
     useEffect(() => {
         setBoards([
@@ -51,7 +52,7 @@ const TasksBoard = ({ project }: TasksBoardProps) => {
 
     function dropHandler(e: DragEvent<HTMLDivElement>, board: IBoardItem, item: ITusk): void {
         e.preventDefault()
-        const newTask = {...currentItem!, state: board.state}
+        const newTask = { ...currentItem!, state: board.state }
         const taskIndex = project.tasks.indexOf(currentItem!);
         // const currentIndex = currentBoard!.items.indexOf(currentItem!);
         // currentBoard!.items.splice(currentIndex, 1);
@@ -68,11 +69,11 @@ const TasksBoard = ({ project }: TasksBoardProps) => {
 
         //     return boardItem;
         // }))
-        dispatch(editTaskBoard({newTask, taskIndex }))
+        dispatch(editTaskBoard({ newTask, taskIndex }))
     }
 
     function boardDropHandler(e: DragEvent<HTMLDivElement | HTMLUListElement>, board: IBoardItem): void {
-        const newTask = {...currentItem!, state: board.state}
+        const newTask = { ...currentItem!, state: board.state }
         const taskIndex = project.tasks.indexOf(currentItem!);
         // board.items.push(currentItem!);
         // const currentIndex = currentBoard!.items.indexOf(currentItem!);
@@ -88,7 +89,7 @@ const TasksBoard = ({ project }: TasksBoardProps) => {
 
         //     return boardItem;
         // }))
-        dispatch(editTaskBoard({newTask, taskIndex }))
+        dispatch(editTaskBoard({ newTask, taskIndex }))
     }
 
     return (
@@ -104,7 +105,7 @@ const TasksBoard = ({ project }: TasksBoardProps) => {
                             <div
                                 className='tasksBoard__drag_item'
                                 key={item.id}
-                                draggable={true}
+                                draggable={!modalTodoIsOpen}
                                 onDragOver={(e) => dragOverHandler(e)}
                                 onDragLeave={(e) => dragLeaveHandler(e)}
                                 onDragStart={(e) => dragStartHandler(e, board, item)}

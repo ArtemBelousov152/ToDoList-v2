@@ -5,6 +5,10 @@
     box-shadow: 2px 2px 10px black;
     border-radius: 10px;
     margin-bottom: 40px;
+    &_disabled {
+        pointer-events: none;
+        filter: opacity(50%);
+    }
     &__header {
         display: flex;
         justify-content: space-between;

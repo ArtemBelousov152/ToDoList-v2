@@ -16,12 +16,6 @@
         font-size: 20px;
         font-weight: bold;
     }
-    &__status {
-        margin-top: 10px;
-        span {
-            font-weight: bold;
-        }
-    }
     &__priority {
         span {
             font-weight: bold;
@@ -51,13 +45,22 @@
     }
     &__descr {
         position: relative;
-        word-wrap: break-word;
         width: 500px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
+        &_text {
+            max-height: 96px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            transition: .6s all;
+            &-more {
+                box-shadow: 1px 1px 10px black, -1px -1px 10px black;
+                overflow: auto;
+                -webkit-line-clamp: inherit;
+                -webkit-box-orient: vertical;
+            }
+        }
         &_more {
             margin-top: 10px;
         }

@@ -1,7 +1,8 @@
 import Status from '../status/Status';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { FC } from 'react';
 import { todoSlice } from '../../store/reducers/todoSlice';
+import classNames from 'classnames';
 
 import './minTask.scss';
 import { status } from '../../models/enums';
@@ -19,6 +20,7 @@ interface IPropsMinTask {
 
 const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, status }) => {
     const dispatch = useAppDispatch();
+    const { modalTodoIsOpen } = useAppSelector(state => state.todoReducer);
     const { delTask, openModalTodo, setActiveTask } = todoSlice.actions;
 
     const aboutTask = () => {
@@ -26,12 +28,16 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
         dispatch(openModalTodo())
     }
 
+    const disabledClass = classNames({
+        'minTask_disabled': modalTodoIsOpen
+    })
+
     return (
-        <li className="minTask">
+        <li className={`minTask ${disabledClass}`}>
             <div className="minTask__header">
                 <div className="minTask__number">№{number}</div>
                 <h2 className="minTask__header">{title}</h2>
-                <Status min={true} position={status}/>
+                <Status min={true} position={status} />
             </div>
             <div className="minTask__descr">
                 {descr}

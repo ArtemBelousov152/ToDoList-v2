@@ -1,6 +1,7 @@
 import { IProject, } from "../../models/project";
 import { ITusk } from '../../models/task';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { priority } from "../../models/enums";
 
 interface todoState {
     projects: IProject[];
@@ -79,7 +80,7 @@ export const todoSlice = createSlice({
         closeModalTodo(state) {
             const { activeProjectIndex, activeTaskIndex } = state
 
-            if (state.activeTask) {
+            if (state.activeTask && state.projects[activeProjectIndex].tasks[activeTaskIndex].id === state.activeTask.id) {
                 state.projects[activeProjectIndex].tasks[activeTaskIndex] = state.activeTask
             }
             
@@ -101,8 +102,10 @@ export const todoSlice = createSlice({
         },
         closeDescrEdit(state) {
             state.isDescrEdit = false;
+        },
+        editPriorityTask(state, action: PayloadAction<priority>) {
+            state.activeTask!.priority = action.payload
         }
-
     }
 })
 

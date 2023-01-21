@@ -1,5 +1,4 @@
 import Status from '../../status/Status';
-import MinTask from '../../minTask/MinTask';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect, useState } from 'react';
@@ -9,14 +8,14 @@ import Task from '../../task/Task';
 import { ModalAddTodo } from '../../modalAddTask/ModalAddTodo';
 import { status } from '../../../models/enums';
 import { useNavigate } from 'react-router-dom';
+import TasksBoard from '../../tasksBoard/TasksBoard';
 
 import './tasks.scss';
-import TasksBoard from '../../tasksBoard/TasksBoard';
 
 function Tasks() {
     const [project, setProject] = useState<IProject>({ id: '', tasks: [], title: 'as', status: status.INPROGRESS });
     const { id } = useParams() as { id: string };
-    const { projects, modalAddTodoIsOpen, modalTodoIsOpen, activeProjectIndex } = useAppSelector(state => state.todoReducer)
+    const { projects, modalTodoIsOpen, activeProjectIndex } = useAppSelector(state => state.todoReducer)
     const dispatch = useAppDispatch();
     const { openModalAddTodo, closeModalTodo, setActiveProjectId } = todoSlice.actions;
     const navigate = useNavigate();
@@ -32,12 +31,6 @@ function Tasks() {
         })
     }, [projects])
 
-    const modalWindowAddTodo = modalAddTodoIsOpen ?
-        <ModalAddTodo
-            id={id}
-            project={project} />
-        : null;
-
     const modalWindowTask = modalTodoIsOpen ?
         <Task />
         : null
@@ -49,7 +42,9 @@ function Tasks() {
 
     return (
         <div className='tasks'>
-            {modalWindowAddTodo}
+            {<ModalAddTodo
+            id={id}
+            project={project}/>}
             <div className="tasks__header">
                 <h1 className='tasks__name'>{project.title}</h1>
                 <button
