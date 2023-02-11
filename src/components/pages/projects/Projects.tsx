@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IProject, } from "../../../models/project";
 import { v4 as uuidv4 } from 'uuid';
 import { todoSlice } from '../../../store/reducers/todoSlice';
 import { Link } from 'react-router-dom';
-
-import './projects.scss';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { status } from '../../../models/enums';
+import ProjectCard from '../../projectCard/ProjectCard';
+
+import './projects.scss';
 
 function Projects() {
     const [modal, setModal] = useState<boolean>(false);
@@ -56,26 +57,27 @@ function Projects() {
             return (
                 projects.map((item, id) => {
                     return (
-                        <div 
-                            className="projects__item"
-                            key={item.id}>
-                            <div 
-                                className="projects__close"
-                                onClick={() => dispatch(delProject(item.id))}>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <h2 className='projects__name'>{item.title}</h2>
-                            <h2 className='projects__tasks'>Список задач:</h2>
-                            <ul className='projects__list'>
-                                {renderTaskList(id)}
-                            </ul>
-                            <Link 
-                                className='projects__about'
-                                to={`/tasks/${item.id}`}>
-                                    Подробнее
-                            </Link>
-                        </div>
+                        <ProjectCard/>
+                        // <div 
+                        //     className="projects__item"
+                        //     key={item.id}>
+                        //     <div 
+                        //         className="projects__close"
+                        //         onClick={() => dispatch(delProject(item.id))}>
+                        //         <span></span>
+                        //         <span></span>
+                        //     </div>
+                        //     <h2 className='projects__name'>{item.title}</h2>
+                        //     <h2 className='projects__tasks'>Список задач:</h2>
+                        //     <ul className='projects__list'>
+                        //         {renderTaskList(id)}
+                        //     </ul>
+                        //     <Link 
+                        //         className='projects__about'
+                        //         to={`/tasks/${item.id}`}>
+                        //             Подробнее
+                        //     </Link>
+                        // </div>
                     )
                 })
             )
