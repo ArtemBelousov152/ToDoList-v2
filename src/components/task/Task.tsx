@@ -51,7 +51,7 @@ const Task = () => {
                 <Priority/>
                 <div className="task__workTime">
                     Время в работе:
-                    <br /> {activeTask.timeInWork} часов
+                    <br /> {activeTask.timeInWork} дней
                 </div>
                 <Status min={true} position={activeTask.status} />
             </div>

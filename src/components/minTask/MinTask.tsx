@@ -1,6 +1,6 @@
 import Status from '../status/Status';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { todoSlice } from '../../store/reducers/todoSlice';
 import classNames from 'classnames';
 
@@ -21,12 +21,23 @@ interface IPropsMinTask {
 const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeInWork, title, id, status }) => {
     const dispatch = useAppDispatch();
     const { modalTodoIsOpen } = useAppSelector(state => state.todoReducer);
-    const { delTask, openModalTodo, setActiveTask } = todoSlice.actions;
+    const { delTask, openModalTodo, setActiveTask, timeInWorkChange } = todoSlice.actions;
 
     const aboutTask = () => {
         dispatch(setActiveTask(id))
         dispatch(openModalTodo())
     }
+
+    useEffect(() => {
+        dispatch(timeInWorkChange(id));
+        const checkTime = setInterval(() => {
+            dispatch(timeInWorkChange(id));
+        }, 10000)
+
+        return () => {
+            clearInterval(checkTime);
+        };
+    }, [])
 
     const disabledClass = classNames({
         'minTask_disabled': modalTodoIsOpen
@@ -49,7 +60,7 @@ const MinTask: FC<IPropsMinTask> = ({ number, descr, priority, startDate, timeIn
                 Дата создания: {startDate}
             </div>
             <div className="minTask__workTime">
-                Время в работе: {timeInWork} часов
+                Время в работе: {timeInWork} дней
             </div>
             <div className="minTask__footer">
                 <button

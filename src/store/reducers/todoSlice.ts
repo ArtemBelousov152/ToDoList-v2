@@ -83,7 +83,7 @@ export const todoSlice = createSlice({
             if (state.activeTask && state.projects[activeProjectIndex].tasks[activeTaskIndex].id === state.activeTask.id) {
                 state.projects[activeProjectIndex].tasks[activeTaskIndex] = state.activeTask
             }
-            
+
             state.modalTodoIsOpen = false
         },
         openModalAddTodo(state) {
@@ -105,6 +105,25 @@ export const todoSlice = createSlice({
         },
         editPriorityTask(state, action: PayloadAction<priority>) {
             state.activeTask!.priority = action.payload
+        },
+        timeInWorkChange(state, action: PayloadAction<string>) {
+            const task = state.projects[state.activeProjectIndex].tasks.find(item => item.id === action.payload);
+
+            if (task === undefined) {
+                return;
+            }
+            
+            const taskIndex = state.projects[state.activeProjectIndex].tasks.findIndex(item => item.id === action.payload);
+            const [day, month, year] = task.startDate.split('.');
+
+            const startTime = new Date(+year, +month - 1, +day).getTime();
+            const currentTime = Date.now();
+
+            const newWorkTime = Math.floor((currentTime - startTime) / 1000 / 60 / 60 / 24);
+
+            if (state.projects[state.activeProjectIndex].tasks[taskIndex].timeInWork !== newWorkTime) {
+                state.projects[state.activeProjectIndex].tasks[taskIndex].timeInWork = newWorkTime;
+            }   
         }
     }
 })

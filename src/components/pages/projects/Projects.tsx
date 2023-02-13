@@ -57,27 +57,27 @@ function Projects() {
             return (
                 projects.map((item, id) => {
                     return (
-                        <ProjectCard/>
-                        // <div 
-                        //     className="projects__item"
-                        //     key={item.id}>
-                        //     <div 
-                        //         className="projects__close"
-                        //         onClick={() => dispatch(delProject(item.id))}>
-                        //         <span></span>
-                        //         <span></span>
-                        //     </div>
-                        //     <h2 className='projects__name'>{item.title}</h2>
-                        //     <h2 className='projects__tasks'>Список задач:</h2>
-                        //     <ul className='projects__list'>
-                        //         {renderTaskList(id)}
-                        //     </ul>
-                        //     <Link 
-                        //         className='projects__about'
-                        //         to={`/tasks/${item.id}`}>
-                        //             Подробнее
-                        //     </Link>
-                        // </div>
+                        // <ProjectCard/>
+                        <div 
+                            className="projects__item"
+                            key={item.id}>
+                            <div 
+                                className="projects__close"
+                                onClick={() => dispatch(delProject(item.id))}>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <h2 className='projects__name'>{item.title}</h2>
+                            <h2 className='projects__tasks'>Список задач:</h2>
+                            <ul className='projects__list'>
+                                {renderTaskList(id)}
+                            </ul>
+                            <Link 
+                                className='projects__about'
+                                to={`/tasks/${item.id}`}>
+                                    Подробнее
+                            </Link>
+                        </div>
                     )
                 })
             )
